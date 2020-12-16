@@ -254,25 +254,23 @@ class NiconicoIE(InfoExtractor):
                 }
             }).encode())
 
-        # get heartbeat info
-        heartbeat_url = session_api_endpoint['url'] + '/' + session_response['data']['session']['id'] + '?_format=json&_method=PUT'
-        heartbeat_data = json.dumps(session_response['data']).encode()
-        # interval, convert milliseconds to seconds, then halve to make a buffer.
-        heartbeat_interval = session_api_data['heartbeat_lifetime'] / 2000
-
         resolution = video_quality.get('resolution', {})
+
+        # print("----------")
+        # print(session_response['data']['session']['id'])
+        # print(session_response['data']['session']['content_uri'])
+        # print("----------")
 
         return {
             'url': session_response['data']['session']['content_uri'],
+            'session': session_response['data'],
+            'session_id': session_response['data']['session']['id'],
             'format_id': format_id,
             'ext': 'mp4',  # Session API are used in HTML5, which always serves mp4
             'abr': float_or_none(audio_quality.get('bitrate'), 1000),
             'vbr': float_or_none(video_quality.get('bitrate'), 1000),
             'height': resolution.get('height'),
             'width': resolution.get('width'),
-            'heartbeat_url': heartbeat_url,
-            'heartbeat_data': heartbeat_data,
-            'heartbeat_interval': heartbeat_interval,
         }
 
     def _real_extract(self, url):
