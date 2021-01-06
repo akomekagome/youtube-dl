@@ -1,5 +1,3 @@
-SmilePlayer用に改造した
-
 [![Build Status](https://travis-ci.com/ytdl-org/youtube-dl.svg?branch=master)](https://travis-ci.com/ytdl-org/youtube-dl)
 
 youtube-dl - download videos from youtube.com or other video platforms
